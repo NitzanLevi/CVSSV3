@@ -1,0 +1,58 @@
+.application{
+    display: inline-block;
+    width: 90%;
+    margin: 15px;
+    font-family: 'Assistant', sans-serif;
+}
+.mini-title{
+    font-size: 60%;
+}
+.cvss-section {
+    width: 95%;
+}
+
+.btn-primary{
+    background-color: white;
+    color: #2e6da4;
+}
+.cvss-field-title{
+    padding: 5px;
+}
+.cvss-score-panel{
+    display: inline-block;
+        width: 100%;
+
+}
+
+.cvss-score-unsticky-panel{
+    display: inline-block;
+        width: 100%;
+
+}
+.cvss-score-sticky-panel{
+    background-color: #333;
+    color: whitesmoke;
+    font-size: 1em;
+    border-radius: 0.5ex;
+    width: 100%;
+    
+}
+.cvss-score-row{
+}
+
+h4{
+    padding: 5px;
+}
+
+.chart-bar{
+    width: 400px;
+    height: 400px;
+}
+
+.btn{
+    border-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
