@@ -6,7 +6,7 @@ app.controller('CVSSController', ['$scope','$location', function($scope,$locatio
     this.environmentalMetricScore = "NA";
     this.temporalMetricScore = "NA";
     this.vectorString = "";
-    this.baseURL = "https://nitzanlevi.github.io/CVSSV3";
+    this.baseURL = "https://nitzanlevi.github.io/CVSSV3/";
     this.cvssValid = false;
 
 
