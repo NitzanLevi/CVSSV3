@@ -20,13 +20,13 @@
 }
 .cvss-score-panel{
     display: inline-block;
-        width: 100%;
+    width: 100%;
 
 }
 
 .cvss-score-unsticky-panel{
     display: inline-block;
-        width: 100%;
+    width: 100%;
 
 }
 .cvss-score-sticky-panel{
@@ -35,7 +35,7 @@
     font-size: 1em;
     border-radius: 0.5ex;
     width: 100%;
-    
+
 }
 .cvss-score-row{
 }
@@ -55,4 +55,8 @@ h4{
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
+}
+.btn-group{
+    margin-bottom: 5px;
+    margin-top: 2px;
 }

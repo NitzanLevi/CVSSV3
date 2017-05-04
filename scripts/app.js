@@ -1,6 +1,7 @@
-var app = angular.module('CVSSApp', ['ui.bootstrap', 'sticky', 'chart.js']).config(function($locationProvider) {
+var app = angular.module('CVSSApp', ['ui.bootstrap', 'sticky', 'chart.js','pascalprecht.translate','720kb.tooltips']).config(function($locationProvider) {
     $locationProvider.html5Mode(true);
 });
+
 app.controller('CVSSController', ['$scope','$location', function($scope,$location) {
     this.baseMetricScore = "NA";
     this.environmentalMetricScore = "NA";
@@ -11,7 +12,7 @@ app.controller('CVSSController', ['$scope','$location', function($scope,$locatio
     this.cvssValid = false;
 
 
-     this.CVSSData={
+    this.CVSSData={
         CVSS : "",        
         AV : "",        
         AC : "",
@@ -64,7 +65,7 @@ app.controller('CVSSController', ['$scope','$location', function($scope,$locatio
         console.log(cvssResult);
     };
 
-   
+
 
     this.chartLabels =["מדדי בסיס","מדדים זמניים","מדדים סביבתיים"];
     this.chartOptions = {
@@ -83,5 +84,26 @@ app.controller('CVSSController', ['$scope','$location', function($scope,$locatio
         },this);
     }
 
-    
+
 }]);
+
+
+app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
+  tooltipsConfProvider.configure({
+    'smart':true,
+    'size':'large',
+    'speed': 'fast',
+    'side':'bottom',
+    'tooltipTemplateUrlCache': true
+  });
+}])
+
+
+app.config(function($translateProvider) {
+    $translateProvider.translations('he', {
+        HEADLINE: 'Common Vulnerability Scoring System Calculator',
+        AV : 'כותרת וקטור תקיפה',
+        AVN : 'AVN'
+    });
+    $translateProvider.preferredLanguage('he');
+});

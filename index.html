@@ -2,463 +2,468 @@
     <head>
         <meta charset="utf-8" />
         <base href="/">
-        <link href="/CVSSV3/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="/CVSSV3/css/app.css" type="text/css" rel="stylesheet"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/app.css" type="text/css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet"/>
-        <link href="/CVSSV3/css/bootstrap-rtl.min.css" rel="stylesheet" />
+        <link href="css/bootstrap-rtl.min.css" rel="stylesheet" />
+        <link href="css/angular-tooltips.min.css" rel="stylesheet" />
 
-        <script src="/CVSSV3/scripts/external/angular.min.js" type="text/javascript" ></script>
-        <script src="/CVSSV3/scripts/external/ui-bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="/CVSSV3/scripts/external/ui-bootstrap-tpls.min.js" crossorigin="anonymous"></script>
-        <script src="/CVSSV3/scripts/external/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="/CVSSV3/scripts/external/angular-charts.js" type="text/javascript" ></script>
-        <script src="/CVSSV3/scripts/CVSS.js" type="text/javascript" ></script>
-        <script src="/CVSSV3/scripts/external/sticky.js"></script>
-        <script src="/CVSSV3/scripts/app.js" type="text/javascript"></script>
+        <script src="scripts/external/angular.min.js" type="text/javascript" ></script>
+        <script src="scripts/external/ui-bootstrap.min.js" crossorigin="anonymous"></script>
+        <script src="scripts/external/ui-bootstrap-tpls.min.js" crossorigin="anonymous"></script>
+        <script src="scripts/external/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="scripts/external/angular-charts.js" type="text/javascript" ></script>
+        <script src="scripts/external/angular-translate.min.js" type="text/javascript" ></script>
+        <script src="scripts/external/CVSS.js" type="text/javascript" ></script>
+        <script src="scripts/external/sticky.js"></script>
+        <script src="scripts/external/angular-tooltips.min.js"></script>
+        <script src="scripts/app.js" type="text/javascript"></script>
     </head>
     <body dir=rtl>
-        <h1 class="col-lg-12 col-md-12">
-            Common Vulnerability Scoring System Calculator
-            <span class="mini-title">גירסה 3.0</span>
-        </h1>
-        <div ng-app="CVSSApp" ng-controller="CVSSController as vm" class="application">
+        <div ng-app="CVSSApp" ng-controller="CVSSController as vm">
+            <h1 class="col-lg-12 col-md-12">
+                {{'HEADLINE' | translate}}
+                <span class="mini-title">גירסה 3.0</span>
+            </h1>
+            <div class="application">
 
-            <div class="cvss-score-panel" ng-if="vm.cvssValid" ng-cloak>
-                <div sticky sticky-class="cvss-score-sticky-panel" unsticky-class="cvss-score-unsticky-panel">
-                    <div class="cvss-score-row">ציון מדדי הבסיס: {{vm.baseMetricScore}}</div>
-                    <div class="cvss-score-row">ציון מדדי הסביבה: {{vm.environmentalMetricScore}}</div>
-                    <div class="cvss-score-row">ציון מדדים זמניים: {{vm.temporalMetricScore}}</div>
-                    <div class="cvss-score-row">וקטור המדד: <a href={{vm.baseURL}}?vector={{vm.vectorString}}>{{vm.vectorString}}</a></div>
-                </div>
-            </div>
-            <div class="panel panel-primary cvss-section">
-                <div class="panel-heading">מדדי בסיס</div>
-                <div class="panel-body">
-                    <div class="col-lg-6 col-md-12">
-                        <h4>מדדי פריצות</h4>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">וקטור התקיפה (AV)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" uib-tooltip="TITLE"  data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'N'">
-                                        רשת (AV:N)
-                                    </label>
-                                    <label class="btn btn-primary"  uib-tooltip="TITLE" data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'A'">
-                                        רשת סמוכה (AV:A)
-                                    </label>
-                                    <label class="btn btn-primary"  uib-tooltip="TITLE" data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'L'">
-                                        גישה מוקמית (AV:L)
-                                    </label>
-                                    <label class="btn btn-primary"  uib-tooltip="TITLE"  data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'P'">
-                                        גישה פיזית (AV:P)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">מורכבות התקיפה (AC)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.AC">
-                                        נמוכה (AC:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.AC">
-                                        גבוהה (AC:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">רמת הרשאות נדרשת (PR)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.PR">
-                                        אין (PR:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.PR">
-                                        נמוכה (PR:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.PR">
-                                        גבוהה (PR:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">מעורבות משתמש (UI)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.UI">
-                                        ללא תערבות (UI:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.UI">
-                                        דרושה (UI:R)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">תחום (S)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.S">
-                                        ללא שינוי (S:U)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.S">
-                                        משתנה (S:C)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <h4>מדדי השפעה</h4>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">מידת ההשפעה על סודיות המידע (C)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.C">
-                                        אין (C:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.C">
-                                        נמוכה (C:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.C">
-                                        גבוהה (C:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">מידת ההשפעה על שלמות הנתונים (I)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.I">
-                                        אין (I:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.I">
-                                        נמוכה (I:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.I">
-                                        גבוהה (I:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">מידת ההשפעה על זמינות הנתונים (A)*</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.A">
-                                        אין (A:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.A">
-                                        נמוכה (A:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.A">
-                                        גבוהה (A:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
+
+                <div class="cvss-score-panel" ng-if="vm.cvssValid" ng-cloak>
+                    <div sticky sticky-class="cvss-score-sticky-panel" unsticky-class="cvss-score-unsticky-panel">
+                        <div class="cvss-score-row">ציון מדדי הבסיס: {{vm.baseMetricScore}}</div>
+                        <div class="cvss-score-row">ציון מדדי הסביבה: {{vm.environmentalMetricScore}}</div>
+                        <div class="cvss-score-row">ציון מדדים זמניים: {{vm.temporalMetricScore}}</div>
+                        <div class="cvss-score-row">וקטור המדד: <a href={{vm.baseURL}}?vector={{vm.vectorString}}>{{vm.vectorString}}</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-primary cvss-section">
-                <div class="panel-heading">מדדים זמניים</div>
-                <div class="panel-body">
-                    <div>
-                        <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">ניצול פרצות קוד (E)</span></div>
-                        <div class="btn-group" data-toggle="buttons">
-                            <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.E">
-                                    לא מוגדר  (E:X)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.E">
-                                    לא מוכח (E:U)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'P'" ng-model="vm.CVSSData.E">
-                                    פרצת קוד קיימת (E:P)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'F'" ng-model="vm.CVSSData.E">
-                                    פונקציונאלי (E:F)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.E">
-                                    גבוהה (E:H)
-                                </label>
-                            </div>               
-                        </div>
-                    </div>
-                    <div>
-                        <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">רמת שיקום (RL)</span></div>
-                        <div class="btn-group" data-toggle="buttons">
-                            <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.RL">
-                                    לא מוגדרת  (RL:X)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'O'" ng-model="vm.CVSSData.RL">
-                                    תיקון רשמי (RL:O)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'T'" ng-model="vm.CVSSData.RL">
-                                    תיקון זמני (RL:T)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'W'" ng-model="vm.CVSSData.RL">
-                                    פתרון עקיף (RL:W)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.RL">
-                                    לא זמין (RL:U)
-                                </label>
-                            </div>               
-                        </div>
-                    </div>
-                    <div>
-                        <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">אמינות מדווח (RC)</span></div>
-                        <div class="btn-group" data-toggle="buttons">
-                            <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.RC">
-                                    לא מוגדר (RC:X)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.RC">
-                                    לא ידוע (RC:U)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.RC">
-                                    הגיוני (RC:R)
-                                </label>
-                                <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.RC">
-                                    מאושר (RC:C)
-                                </label>
-                            </div>               
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-primary cvss-section">
-                <div class="panel-heading">מדדים סביבתיים</div>
-                <div class="panel-body">
-                    <div class="col-lg-4 col-md-12">
-                        <div>
-                            <h4>מדדי בסיס לשינויים בסביבה</h4>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי בהרשאות גישה (AV)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
+                <div class="panel panel-primary cvss-section">
+                    <div tooltips tooltip-template="{{'BASE' | translate}}" class="panel-heading">מדדי בסיס</div>
+                    <div class="panel-body">
+                        <div class="col-lg-6 col-md-12">
+                            <h4>מדדי פריצות</h4>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'AV' | translate}}" bottom  class="cvss-field-title">וקטור התקיפה (AV)*</span></div>
                                 <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MAV">
-                                        לא מוגדרת  (MAV:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MAV">
-                                        רשת (MAV:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'A'" ng-model="vm.CVSSData.MAV">
-                                        רשת סמוכה (MAV:A)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MAV">
-                                        גישה מקומית (MAV:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'P'" ng-model="vm.CVSSData.MAV">
-                                        גישה פיזית (MAV:P)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי במורכבות המתקפה (AC)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MAC">
-                                        לא מוגדרת  (MAC:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MAC">
-                                        נמוכה (MAC:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MAC">
-                                        גבוהה (MAC:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי בהרשאות הדרושות (PR)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MPR">
-                                        לא מוגדרת  (MPR:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MPR">
-                                        אין (MPR:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MPR">
-                                        נמוכה (MPR:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MPR">
-                                        גבוהה (MPR:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי ברמת האינטרקציה עם המשתמש (UI)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MUI">
-                                        לא מוגדרת  (MUI:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MUI">
-                                        אין (MUI:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.MUI">
-                                        Required (MUI:R)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>                                    
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">תיחום (S)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MS">
-                                        לא מוגדרת  (MS:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.MS">
-                                        Unchanged (MS:U)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.MS">
-                                        Changed (MS:C)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div>
-                            <h4>Impact Metrics</h4>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי במידת השפעה על הסודיות (C)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MC">
-                                        לא מוגדרת  (MC:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MC">
-                                        אין (MC:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MC">
-                                        נמוכה (MC:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MC">
-                                        גבוהה (MC:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי במידת ההשפעה על השלמות (I)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MI">
-                                        לא מוגדרת  (MI:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MI">
-                                        אין (MI:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MI">
-                                        נמוכה (MI:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MI">
-                                        גבוהה (MI:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">שינוי במידת ההשפעה על הזמינות (A)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MA">
-                                        לא מוגדרת  (MA:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MA">
-                                        אין (MA:N)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MA">
-                                        נמוכה (MA:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MA">
-                                        גבוהה (MA:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div >
-                            <h4>דרישות אבטחה</h4>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">דרישה לסודיות הנתונים (CR)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.CR">
-                                        לא מוגדרת  (CR:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.CR">
-                                        נמוכה (CR:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.CR">
-                                        בינונית (CR:M)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.CR">
-                                        גבוהה (CR:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">דרישה לשלמות הנתונים (IR)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.IR">
-                                        לא מוגדרת  (IR:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.IR">
-                                        נמוכה (IR:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.IR">
-                                        בינונית (IR:M)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.IR">
-                                        גבוהה (IR:H)
-                                    </label>
-                                </div>               
-                            </div>
-                        </div>
-                        <div>
-                            <div><span uib-tooltip="TITLE" bottom  class="cvss-field-title">דרישה לזמינות הנתונים (AR)</span></div>
-                            <div class="btn-group" data-toggle="buttons">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.AR">
-                                        לא מוגדרת  (AR:X)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.AR">
-                                        נמוכה (AR:L)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.AR">
-                                        בינונית (AR:M)
-                                    </label>
-                                    <label class="btn btn-primary" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.AR">
-                                        גבוהה (AR:H)
-                                    </label>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AVN' | translate}}"  data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'N'">
+                                            רשת (AV:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AVA' | translate}}" data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'A'">
+                                            רשת סמוכה (AV:A)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AVL' | translate}}" data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'L'">
+                                            גישה מוקמית (AV:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AVP' | translate}}" data-container='body' data-placement="top" ng-change="vm.setScore()" ng-model="vm.CVSSData.AV" uib-btn-radio="'P'">
+                                            גישה פיזית (AV:P)
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>               
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'AC' | translate}}" bottom  class="cvss-field-title">מורכבות התקיפה (AC)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ACL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.AC">
+                                            נמוכה (AC:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ACH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.AC">
+                                            גבוהה (AC:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'PR' | translate}}" bottom  class="cvss-field-title">רמת הרשאות נדרשת (PR)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'PRN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.PR">
+                                            אין (PR:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'PRL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.PR">
+                                            נמוכה (PR:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'PRH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.PR">
+                                            גבוהה (PR:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'UI' | translate}}" bottom  class="cvss-field-title">מעורבות משתמש (UI)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'UIN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.UI">
+                                            ללא תערבות (UI:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'UIR' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.UI">
+                                            דרושה (UI:R)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'S' | translate}}" bottom  class="cvss-field-title">תחום (S)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'SU' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.S">
+                                            ללא שינוי (S:U)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'SC' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.S">
+                                            משתנה (S:C)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <h4>מדדי השפעה</h4>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'C' | translate}}" bottom  class="cvss-field-title">מידת ההשפעה על סודיות המידע (C)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.C">
+                                            אין (C:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.C">
+                                            נמוכה (C:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.C">
+                                            גבוהה (C:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'I' | translate}}" bottom  class="cvss-field-title">מידת ההשפעה על שלמות הנתונים (I)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.I">
+                                            אין (I:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.I">
+                                            נמוכה (I:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.I">
+                                            גבוהה (I:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'A' | translate}}" bottom  class="cvss-field-title">מידת ההשפעה על זמינות הנתונים (A)*</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.A">
+                                            אין (A:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.A">
+                                            נמוכה (A:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'AH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.A">
+                                            גבוהה (A:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="cvss-score-radar">
+                <div class="panel panel-primary cvss-section">
+                    <div class="panel-heading">מדדים זמניים</div>
+                    <div class="panel-body">
+                        <div>
+                            <div><span tooltips tooltip-template="{{'E' | translate}}" bottom  class="cvss-field-title">ניצול פרצות קוד (E)</span></div>
+                            <div class="btn-group" data-toggle="buttons">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'EX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.E">
+                                        לא מוגדר  (E:X)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'EU' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.E">
+                                        לא מוכח (E:U)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'EP' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'P'" ng-model="vm.CVSSData.E">
+                                        פרצת קוד קיימת (E:P)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'EF' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'F'" ng-model="vm.CVSSData.E">
+                                        פונקציונאלי (E:F)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'EH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.E">
+                                        גבוהה (E:H)
+                                    </label>
+                                </div>               
+                            </div>
+                        </div>
+                        <div>
+                            <div><span tooltips tooltip-template="{{'HEADLINE' | translate}}" bottom  class="cvss-field-title">רמת שיקום (RL)</span></div>
+                            <div class="btn-group" data-toggle="buttons">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RLX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.RL">
+                                        לא מוגדרת  (RL:X)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RLO' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'O'" ng-model="vm.CVSSData.RL">
+                                        תיקון רשמי (RL:O)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RLT' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'T'" ng-model="vm.CVSSData.RL">
+                                        תיקון זמני (RL:T)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RLW' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'W'" ng-model="vm.CVSSData.RL">
+                                        פתרון עקיף (RL:W)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RLU' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.RL">
+                                        לא זמין (RL:U)
+                                    </label>
+                                </div>               
+                            </div>
+                        </div>
+                        <div>
+                            <div><span tooltips tooltip-template="{{'RC' | translate}}" bottom  class="cvss-field-title">אמינות מדווח (RC)</span></div>
+                            <div class="btn-group" data-toggle="buttons">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RCX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.RC">
+                                        לא מוגדר (RC:X)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RCU' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.RC">
+                                        לא ידוע (RC:U)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RCR' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.RC">
+                                        הגיוני (RC:R)
+                                    </label>
+                                    <label class="btn btn-primary" tooltips tooltip-template="{{'RCC' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.RC">
+                                        מאושר (RC:C)
+                                    </label>
+                                </div>               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary cvss-section">
+                    <div class="panel-heading">מדדים סביבתיים</div>
+                    <div class="panel-body">
+                        <div class="col-lg-4 col-md-12">
+                            <div>
+                                <h4>מדדי בסיס לשינויים בסביבה</h4>
+                                <div><span tooltips tooltip-template="{{'MAV' | translate}}" bottom  class="cvss-field-title">שינוי בהרשאות גישה (AV)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAVX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MAV">
+                                            לא מוגדרת  (MAV:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAVN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MAV">
+                                            רשת (MAV:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAVA' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'A'" ng-model="vm.CVSSData.MAV">
+                                            רשת סמוכה (MAV:A)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAVL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MAV">
+                                            גישה מקומית (MAV:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAVP' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'P'" ng-model="vm.CVSSData.MAV">
+                                            גישה פיזית (MAV:P)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MAC' | translate}}" bottom  class="cvss-field-title">שינוי במורכבות המתקפה (AC)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MACX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MAC">
+                                            לא מוגדרת  (MAC:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MACL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MAC">
+                                            נמוכה (MAC:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MACH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MAC">
+                                            גבוהה (MAC:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MPR' | translate}}" bottom  class="cvss-field-title">שינוי בהרשאות הדרושות (PR)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MPRX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MPR">
+                                            לא מוגדרת  (MPR:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MPRN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MPR">
+                                            אין (MPR:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MPRL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MPR">
+                                            נמוכה (MPR:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MPRH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MPR">
+                                            גבוהה (MPR:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MUI' | translate}}" bottom  class="cvss-field-title">שינוי ברמת האינטרקציה עם המשתמש (UI)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MUIX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MUI">
+                                            לא מוגדרת  (MUI:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MUIN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MUI">
+                                            אין (MUI:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MUIR' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'R'" ng-model="vm.CVSSData.MUI">
+                                            דרוש (MUI:R)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MS' | translate}}" bottom  class="cvss-field-title">תיחום (S)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MSX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MS">
+                                            לא מוגדרת  (MS:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MSU' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'U'" ng-model="vm.CVSSData.MS">
+                                            ללא שינוי (MS:U)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MSC' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'C'" ng-model="vm.CVSSData.MS">
+                                            משתנה (MS:C)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div>
+                                <h4>Impact Metrics</h4>
+                                <div><span tooltips tooltip-template="{{'MC' | translate}}" bottom  class="cvss-field-title">שינוי במידת השפעה על הסודיות (C)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MCX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MC">
+                                            לא מוגדרת  (MC:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MCN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MC">
+                                            אין (MC:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MCL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MC">
+                                            נמוכה (MC:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MCH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MC">
+                                            גבוהה (MC:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MI' | translate}}" bottom  class="cvss-field-title">שינוי במידת ההשפעה על השלמות (I)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MIX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MI">
+                                            לא מוגדרת  (MI:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MIN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MI">
+                                            אין (MI:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MIL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MI">
+                                            נמוכה (MI:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MIH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MI">
+                                            גבוהה (MI:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'MA' | translate}}" bottom  class="cvss-field-title">שינוי במידת ההשפעה על הזמינות (A)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.MA">
+                                            לא מוגדרת  (MA:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAN' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'N'" ng-model="vm.CVSSData.MA">
+                                            אין (MA:N)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.MA">
+                                            נמוכה (MA:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'MAH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.MA">
+                                            גבוהה (MA:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div >
+                                <h4>דרישות אבטחה</h4>
+                                <div><span tooltips tooltip-template="{{'CR' | translate}}" bottom  class="cvss-field-title">דרישה לסודיות הנתונים (CR)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CRX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.CR">
+                                            לא מוגדרת  (CR:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CRL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.CR">
+                                            נמוכה (CR:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CRM' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.CR">
+                                            בינונית (CR:M)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'CRH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.CR">
+                                            גבוהה (CR:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'IR' | translate}}" bottom  class="cvss-field-title">דרישה לשלמות הנתונים (IR)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IRX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.IR">
+                                            לא מוגדרת  (IR:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IRL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.IR">
+                                            נמוכה (IR:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IRM' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.IR">
+                                            בינונית (IR:M)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'IRH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.IR">
+                                            גבוהה (IR:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div><span tooltips tooltip-template="{{'AR' | translate}}" bottom  class="cvss-field-title">דרישה לזמינות הנתונים (AR)</span></div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ARX' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'X'" ng-model="vm.CVSSData.AR">
+                                            לא מוגדרת  (AR:X)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ARL' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'L'" ng-model="vm.CVSSData.AR">
+                                            נמוכה (AR:L)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ARM' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'M'" ng-model="vm.CVSSData.AR">
+                                            בינונית (AR:M)
+                                        </label>
+                                        <label class="btn btn-primary" tooltips tooltip-template="{{'ARH' | translate}}" ng-change="vm.setScore()" uib-btn-radio="'H'" ng-model="vm.CVSSData.AR">
+                                            גבוהה (AR:H)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cvss-score-radar">
 
-                <canvas id="bar" class="chart chart-bar"
-                        chart-options="vm.chartOptions" chart-data="vm.chartData" chart-labels="vm.chartLabels" chart-series="series">
-                </canvas>
+                    <canvas id="bar" class="chart chart-bar"
+                            chart-options="vm.chartOptions" chart-data="vm.chartData" chart-labels="vm.chartLabels" chart-series="series">
+                    </canvas>
+                </div>
             </div>
+
+
         </div>
-
-
-      
 
     </body>
 </html>
