@@ -103,7 +103,8 @@ app.config(function($translateProvider) {
     $translateProvider.translations('he', {
         HEADLINE: 'Common Vulnerability Scoring System Calculator',
         AV : 'כותרת וקטור תקיפה',
-        AVN : 'AVN'
+        AVN : 'AVN',
+        AVA: 'ניצן'
     });
     $translateProvider.preferredLanguage('he');
 });
