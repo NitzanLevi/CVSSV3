@@ -10,18 +10,31 @@
 .cvss-section {
     width: 95%;
 }
+.cvss-header{
+
+}
+.cvss-form{
+
+}
 
 .btn-primary{
     background-color: white;
     color: #2e6da4;
+    border-color: black;
+    color: black;
 }
 .cvss-field-title{
     padding: 5px;
+    font-size: medium;
+    font-weight: bold;
 }
 .cvss-score-panel{
     display: inline-block;
-    width: 100%;
+    float: right;
 
+}
+.cvss-score-bar{
+    float: right;
 }
 
 .cvss-score-unsticky-panel{
@@ -38,6 +51,10 @@
 
 }
 .cvss-score-row{
+    font-size: x-large;
+}
+.cvss-results{
+    width: 90%;
 }
 
 h4{
@@ -45,8 +62,6 @@ h4{
 }
 
 .chart-bar{
-    width: 400px;
-    height: 400px;
 }
 
 .btn{
@@ -59,4 +74,17 @@ h4{
 .btn-group{
     margin-bottom: 5px;
     margin-top: 2px;
+}
+
+.btn-primary.active{
+    font-weight: bold;
+}
+
+.panel-primary{
+    border-color: black;
+}
+.panel-primary .panel-heading {
+    font-size: x-large;
+    background-color: black;
+    border-color: black;
 }

@@ -82,6 +82,7 @@ app.controller('CVSSController', ['$scope','$location', function($scope,$locatio
             var score = v.split(':');
             this.CVSSData[score[0]] = score[1];
         },this);
+        this.setScore();
     }
 
 
@@ -102,6 +103,7 @@ app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
 app.config(function($translateProvider) {
     $translateProvider.translations('he', {
         HEADLINE: 'Common Vulnerability Scoring System Calculator',
+        SUBHEADER:'This page shows the components of the CVSS score for example and allows you to refine the CVSS base score. Please read the CVSS standards guide to fully understand how to score CVSS vulnerabilities and to interpret CVSS scores. The scores are computed in sequence such that the Base Score is used to calculate the Temporal Score and the Temporal Score is used to calculate the Environmental Score.',
         AV : 'כותרת וקטור תקיפה',
         AVN : 'AVN',
         AVA: 'ניצן'
