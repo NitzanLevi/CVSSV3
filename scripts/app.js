@@ -105,7 +105,6 @@ app.config(function($translateProvider) {
         HEADLINE: 'Common Vulnerability Scoring System Calculator',
         SUBHEADER:'This page shows the components of the CVSS score for example and allows you to refine the CVSS base score. Please read the CVSS standards guide to fully understand how to score CVSS vulnerabilities and to interpret CVSS scores. The scores are computed in sequence such that the Base Score is used to calculate the Temporal Score and the Temporal Score is used to calculate the Environmental Score.',
         AV : 'מדד זה משקף את ההקשר שבו ניצול הפגיעויות הוא אפשרי. הערך של מדד זה (ובהתאם גם הציון המתקבל) יהיה גדול יותר ככל שהתוקף יהיה יותר מרוחק (לוגית ופיזית) על מנת לנצל את הרכיב הפגיע.',
-
         AVN : 'AVN',
         AVA: 'ניצן'
     });
