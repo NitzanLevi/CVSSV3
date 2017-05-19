@@ -91,7 +91,7 @@ app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
     tooltipsConfProvider.configure({
         'smart': true,
         'size': 'large',
-        'speed': 'fast',
+        'speed': 'medium',
         'side': 'bottom',
         'tooltipTemplateUrlCache': true,
         'tooltipClass': 'cvss-tooltip'
