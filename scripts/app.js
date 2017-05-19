@@ -93,7 +93,8 @@ app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
         'size': 'large',
         'speed': 'fast',
         'side': 'bottom',
-        'tooltipTemplateUrlCache': true
+        'tooltipTemplateUrlCache': true,
+        'tooltipClass: 'cvss-tooltip'
     });
 }])
 
