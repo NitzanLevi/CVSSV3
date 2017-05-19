@@ -92,9 +92,10 @@ app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
         'smart': true,
         'size': 'large',
         'speed': 'medium',
-        'side': 'bottom',
+        'side': 'left',
         'tooltipTemplateUrlCache': true,
-        'tooltipClass': 'cvss-tooltip'
+        'class': 'cvss-tooltip',
+
     });
 }])
 
