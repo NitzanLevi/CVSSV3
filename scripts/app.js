@@ -94,7 +94,7 @@ app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
         'speed': 'fast',
         'side': 'bottom',
         'tooltipTemplateUrlCache': true,
-        'tooltipClass: 'cvss-tooltip'
+        'tooltipClass': 'cvss-tooltip'
     });
 }])
 
